@@ -16,7 +16,7 @@ const ThemedText = ({
 
   const styles = StyleSheet.create({
     text: {
-      color: theme.foreground,
+      color: theme.text,
       fontSize: TextConfigs[variant].fontSize,
       lineHeight: TextConfigs[variant].lineHeight,
       fontWeight: variant === "title" || variant === "subtitle" ? "800" : "400",

@@ -4,10 +4,12 @@ import Container from "@/src/components/ui/Container";
 import ThemedText from "@/src/components/ui/ThemedText";
 import ThemedView from "@/src/components/ui/ThemedView";
 import useAuth from "@/src/hooks/useAuth";
-import { Image, StyleSheet } from "react-native";
+import useToast from "@/src/hooks/useToast";
+import { StyleSheet } from "react-native";
 
 export default function HomeTab() {
   const { data, logout } = useAuth();
+  const { showToast } = useToast();
 
   return (
     <Container>
@@ -30,6 +32,17 @@ export default function HomeTab() {
       </ThemedView>
 
       <Button title="LOG OUT" onPress={logout} />
+      <Button
+        title="Call toast"
+        onPress={() =>
+          showToast({
+            title: "test",
+            description: "lorem ipsum dolor sit amet",
+            position: "top",
+            variant: "success",
+          })
+        }
+      />
     </Container>
   );
 }

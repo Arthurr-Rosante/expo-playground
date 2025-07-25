@@ -1,13 +1,16 @@
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { AuthProvider } from "../contexts/AuthContext";
+import { ToastProvider } from "../contexts/ToastContext";
 import useAuth from "../hooks/useAuth";
 
 export default function RootLayout() {
   return (
-    <AuthProvider>
-      <LayoutContent />
-    </AuthProvider>
+    <ToastProvider>
+      <AuthProvider>
+        <LayoutContent />
+      </AuthProvider>
+    </ToastProvider>
   );
 }
 

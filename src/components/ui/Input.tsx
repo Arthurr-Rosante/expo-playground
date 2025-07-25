@@ -28,7 +28,7 @@ const Input = ({
   const styles = StyleSheet.create({
     wrapper: {},
     input: {
-      color: theme.foreground,
+      color: theme.text,
       backgroundColor: theme.background,
       borderWidth: 1,
       borderColor: theme.foreground,
@@ -45,7 +45,7 @@ const Input = ({
     <View style={styles.wrapper}>
       <TextInput
         value={value}
-        placeholderTextColor={theme.foreground}
+        placeholderTextColor={theme.text}
         onChangeText={onChangeText}
         placeholder={placeholder}
         style={[styles.input, style]}
