@@ -1,10 +1,10 @@
 import Colors from "@/src/constants/colors";
+import useTheme from "@/src/hooks/useTheme";
 import {
   StyleSheet,
   Text,
   TextInput,
   TextInputProps,
-  useColorScheme,
   View,
 } from "react-native";
 
@@ -23,8 +23,7 @@ const Input = ({
   style,
   ...rest
 }: InputProps) => {
-  const colorScheme = useColorScheme();
-  const theme = Colors[colorScheme as "light" | "dark"] ?? Colors.light;
+  const { theme } = useTheme();
 
   const styles = StyleSheet.create({
     wrapper: {},

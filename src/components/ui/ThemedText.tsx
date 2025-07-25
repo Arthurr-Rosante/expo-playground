@@ -1,6 +1,6 @@
-import Colors from "@/src/constants/colors";
 import TextConfigs from "@/src/constants/text";
-import { StyleSheet, Text, TextProps, useColorScheme } from "react-native";
+import useTheme from "@/src/hooks/useTheme";
+import { StyleSheet, Text, TextProps } from "react-native";
 
 type ThemedTextProps = TextProps & {
   variant?: "title" | "subtitle" | "body" | "small" | "xsmall";
@@ -12,8 +12,7 @@ const ThemedText = ({
   style,
   ...rest
 }: ThemedTextProps) => {
-  const colorScheme = useColorScheme();
-  const theme = Colors[colorScheme as "light" | "dark"] ?? Colors.light;
+  const { theme } = useTheme();
 
   const styles = StyleSheet.create({
     text: {

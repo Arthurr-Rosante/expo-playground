@@ -9,7 +9,7 @@ import { Link } from "expo-router";
 import { useState } from "react";
 
 export default function SignUp() {
-  const { register, logout, isLoading } = useAuth();
+  const { register, isLoading } = useAuth();
   const [formData, setFormData] = useState<FormCredentials>({
     email: "",
     password: "",
@@ -42,7 +42,6 @@ export default function SignUp() {
             title={isLoading ? "Loading..." : "REGISTER"}
             onPress={() => onSubmit(formData)}
           />
-          <Button title={"logout"} onPress={logout} />
         </ThemedView>
       </ThemedView>
 

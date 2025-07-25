@@ -1,5 +1,5 @@
-import Colors from "@/src/constants/colors";
-import { ViewStyle, ViewProps, View, useColorScheme } from "react-native";
+import useTheme from "@/src/hooks/useTheme";
+import { ViewStyle, ViewProps, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type ContainerProps = ViewProps & {
@@ -14,8 +14,7 @@ const Container = ({
   safeHorizontal = true,
   ...rest
 }: ContainerProps) => {
-  const colorScheme = useColorScheme();
-  const theme = Colors[colorScheme as "light" | "dark"] ?? Colors.light;
+  const { theme } = useTheme();
   const insets = useSafeAreaInsets();
 
   const safeStyle: ViewStyle = {

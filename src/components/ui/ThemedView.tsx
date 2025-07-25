@@ -1,11 +1,10 @@
-import Colors from "@/src/constants/colors";
-import { StyleSheet, useColorScheme, View, ViewProps } from "react-native";
+import useTheme from "@/src/hooks/useTheme";
+import { StyleSheet, View, ViewProps } from "react-native";
 
 type ThemedViewProps = ViewProps & {};
 
 const ThemedView = ({ children, style, ...rest }: ThemedViewProps) => {
-  const colorScheme = useColorScheme();
-  const theme = Colors[colorScheme as "light" | "dark"] ?? Colors.light;
+  const { theme } = useTheme();
 
   const styles = StyleSheet.create({
     view: {

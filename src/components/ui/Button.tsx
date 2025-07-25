@@ -1,19 +1,12 @@
-import Colors from "@/src/constants/colors";
-import {
-  Pressable,
-  PressableProps,
-  StyleSheet,
-  Text,
-  useColorScheme,
-} from "react-native";
+import useTheme from "@/src/hooks/useTheme";
+import { Pressable, PressableProps, StyleSheet, Text } from "react-native";
 
 type ButtonProps = PressableProps & {
   title: string;
 };
 
 const Button = ({ title, onPress, ...rest }: ButtonProps) => {
-  const colorScheme = useColorScheme();
-  const theme = Colors[colorScheme as "light" | "dark"] ?? Colors.light;
+  const { theme } = useTheme();
 
   const styles = StyleSheet.create({
     button: {

@@ -1,6 +1,6 @@
-import { Image, ImageProps, StyleSheet, useColorScheme } from "react-native";
+import { Image, ImageProps, StyleSheet } from "react-native";
 import { useEffect, useState } from "react";
-import Colors from "@/src/constants/colors";
+import useTheme from "@/src/hooks/useTheme";
 
 type AvatarProps = ImageProps & {
   size?: number;
@@ -14,8 +14,7 @@ const Avatar = ({
   style,
   ...props
 }: AvatarProps) => {
-  const colorScheme = useColorScheme();
-  const theme = Colors[colorScheme as "light" | "dark"] ?? Colors.light;
+  const { theme } = useTheme();
   const [error, setError] = useState(false);
 
   useEffect(() => {
