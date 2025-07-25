@@ -31,6 +31,7 @@ const config = ({ config }: ConfigContext): ExpoConfig => {
 
   return {
     // === GENERAL VALUES & CONFIGURATIONS ================================== //
+    ...config,
     name: NAME,
     slug: SLUG,
     owner: OWNER,
@@ -146,6 +147,12 @@ const config = ({ config }: ConfigContext): ExpoConfig => {
       eas: {
         projectId: PROJECT_ID,
       },
+    },
+
+    // === EXPERIMENTS CONFIGURATIONS ======================================= //
+    experiments: {
+      typedRoutes: true,
+      tsconfigPaths: true,
     },
   };
 };
