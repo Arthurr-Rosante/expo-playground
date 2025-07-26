@@ -4,12 +4,10 @@ import Container from "@/src/components/ui/Container";
 import ThemedText from "@/src/components/ui/ThemedText";
 import ThemedView from "@/src/components/ui/ThemedView";
 import useAuth from "@/src/hooks/useAuth";
-import useToast from "@/src/hooks/useToast";
 import { StyleSheet } from "react-native";
 
 export default function HomeTab() {
   const { data, logout } = useAuth();
-  const { showToast } = useToast();
 
   return (
     <Container>
@@ -18,7 +16,7 @@ export default function HomeTab() {
         <Avatar size={120} source={{ uri: data.user?.pfp }} />
         <ThemedView style={styles.card}>
           <ThemedText>{data.user?.id}</ThemedText>
-          <ThemedText>{data.user?.username}</ThemedText>
+          <ThemedText>{data.user?.name}</ThemedText>
           <ThemedText>{data.user?.email}</ThemedText>
           <ThemedText>{data.user?.biography}</ThemedText>
         </ThemedView>

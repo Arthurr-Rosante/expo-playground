@@ -48,21 +48,21 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     try {
       setIsLoading(true);
 
-      // const {user, token} = await auth.register(email, password);
-      // storeData(user, token);
+      const { user, token } = await auth.register(email, password);
+      storeData({ user, token });
 
-      storeData({ user: MOCK_USER, token: MOCK_TOKEN });
+      // === MOCK DATA === //
+      // storeData({ user: MOCK_USER, token: MOCK_TOKEN });
 
       showToast({
-        title: "Usuário Registrado",
+        title: "Registro efetuado!",
         description: "redirecionando...",
         variant: "success",
       });
     } catch (error) {
-      setError(error as string);
       showToast({
-        title: "Erro Registrando",
-        description: error as string,
+        title: "Uh oh...",
+        description: "Houve um erro tentanto registrar",
         variant: "error",
       });
     } finally {
@@ -75,20 +75,21 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     try {
       setIsLoading(true);
 
-      // const {user, token} = await auth.login(email, password);
-      // storeData(user, token);
+      // === MOCK DATA === //
+      // storeData({ user: MOCK_USER, token: MOCK_TOKEN });
 
-      storeData({ user: MOCK_USER, token: MOCK_TOKEN });
+      const { user, token } = await auth.login(email, password);
+      storeData({ user, token });
+
       showToast({
-        title: "Usuário Logado",
+        title: "Login efetuado!",
         description: "redirecionando...",
         variant: "success",
       });
     } catch (error) {
-      setError(error as string);
       showToast({
-        title: "Erro Logando",
-        description: error as string,
+        title: "Uh oh...",
+        description: "Houve um erro tentanto logar",
         variant: "error",
       });
     } finally {
@@ -99,11 +100,6 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   // === LOGOUT     FUNCTION ================================================ //
   const logout = () => {
     storeData({ user: null, token: null });
-    showToast({
-      title: "Usuário Deslogado",
-      description: "redirecionando...",
-      variant: "warning",
-    });
   };
 
   // === TRIES TO LOAD STORED DATA ========================================== //

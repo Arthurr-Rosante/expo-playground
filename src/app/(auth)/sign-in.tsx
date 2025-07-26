@@ -38,13 +38,13 @@ export default function SignIn() {
             }
             placeholder="************"
           />
+
           <Button
             title={isLoading ? "Loading..." : "LOGIN"}
             onPress={() => onSubmit(formData)}
           />
         </ThemedView>
       </ThemedView>
-
       <ThemedText>
         Doesn't have an account?{" "}
         <Link href={"/(auth)/sign-up"} style={{ color: "#0000ff" }}>

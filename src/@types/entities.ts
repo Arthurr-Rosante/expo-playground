@@ -1,11 +1,31 @@
 export type User = {
-  id?: string;
-
-  username?: string;
+  id: string;
+  name: string;
   email: string;
-  pfp?: string;
   biography: string;
+  pfp: string;
 
-  createdAt?: Date;
-  updatedAt?: Date;
+  preferences: {
+    mapStyle: string;
+    pointOfInterestStyle: string;
+    avatarOverProfile: boolean;
+    avatarStyle: {
+      head: string;
+      torso: string;
+      leg: string;
+      bag: string;
+      acessory: string;
+    };
+  };
+  unlockedStyles: {
+    unlockedMapStyles: string;
+    unlockedPointOfInterestStyles: string;
+    unlockedHeadStyles: string;
+    unlockedTorsoStyles: string;
+    unlockedLegStyles: string;
+    unlockedBagStyles: string;
+    unlockedAcessoryStyles: string;
+  };
+  createdAt: string;
+  updatedAt: string;
 };

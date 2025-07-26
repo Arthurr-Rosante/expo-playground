@@ -1,12 +1,10 @@
 import axios from "axios";
 
-const API_URL = process.env.EXPO_PUBLIC_API_URL || "api-url-not-set";
+const API_URL = "https://footstep-production.up.railway.app";
 
 const api = axios.create({
   baseURL: API_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
+  headers: { "Content-Type": "application/json" },
 });
 
 export default api;
