@@ -1,5 +1,5 @@
 import { isAxiosError } from "axios";
-import api from "../lib/api";
+import api from "./api";
 
 // === API AUTH ENDPOINT===================================================== //
 const REGISTER_ENDPOINT = "/api/User/register";
@@ -10,13 +10,7 @@ export async function register(email: string, password: string) {
   try {
     const response = await api.post(REGISTER_ENDPOINT, { email, password });
 
-    const { data, status, statusText } = response;
-    console.warn(`
-        | REGISTER REQUEST | \n 
-          DATA:             ${data} \n
-          STATUS:           ${status} \n
-          STATUS TEXT:      ${statusText} \n
-    `);
+    console.log("RESPOSTA DA API - REGISTRO: ", response);
 
     // 1. RECEIVE JWT FROM RESPONSE   | const {token} = response;
     // 2. DECODE JWT                  | decode logic...
@@ -35,13 +29,7 @@ export async function login(email: string, password: string) {
   try {
     const response = await api.post(LOGIN_ENDPOINT, { email, password });
 
-    const { data, status, statusText } = response;
-    console.warn(`
-        | LOGIN REQUEST | \n 
-          DATA:             ${data} \n
-          STATUS:           ${status} \n
-          STATUS TEXT:      ${statusText} \n
-    `);
+    console.log("RESPOSTA DA API - LOGIN: ", response);
 
     // 1. RECEIVE JWT FROM RESPONSE   | const {token} = response;
     // 2. DECODE JWT                  | decode logic...

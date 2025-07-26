@@ -32,17 +32,6 @@ export default function HomeTab() {
       </ThemedView>
 
       <Button title="LOG OUT" onPress={logout} />
-      <Button
-        title="Call toast"
-        onPress={() =>
-          showToast({
-            title: "test",
-            description: "lorem ipsum dolor sit amet",
-            position: "top",
-            variant: "success",
-          })
-        }
-      />
     </Container>
   );
 }

@@ -2,8 +2,9 @@ import { createContext, PropsWithChildren, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SplashScreen } from "expo-router";
 import { AuthState } from "../@types/state";
-import * as auth from "@/src/services/AuthService";
 import { MOCK_USER, MOCK_TOKEN } from "../constants/mock";
+import * as auth from "@/src/services/AuthService";
+import useToast from "../hooks/useToast";
 
 const AUTH_STORAGE_KEY = "expo-playground-auth-data";
 SplashScreen.preventAutoHideAsync();
@@ -28,6 +29,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [isReady, setIsReady] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { showToast } = useToast();
 
   // === STORE DATA ON      ASYNC STORAGE =================================== //
   const storeData = async (data: AuthState["data"]): Promise<void> => {
@@ -50,8 +52,19 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       // storeData(user, token);
 
       storeData({ user: MOCK_USER, token: MOCK_TOKEN });
+
+      showToast({
+        title: "Usuário Registrado",
+        description: "redirecionando...",
+        variant: "success",
+      });
     } catch (error) {
       setError(error as string);
+      showToast({
+        title: "Erro Registrando",
+        description: error as string,
+        variant: "error",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -66,8 +79,18 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       // storeData(user, token);
 
       storeData({ user: MOCK_USER, token: MOCK_TOKEN });
+      showToast({
+        title: "Usuário Logado",
+        description: "redirecionando...",
+        variant: "success",
+      });
     } catch (error) {
       setError(error as string);
+      showToast({
+        title: "Erro Logando",
+        description: error as string,
+        variant: "error",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -76,6 +99,11 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   // === LOGOUT     FUNCTION ================================================ //
   const logout = () => {
     storeData({ user: null, token: null });
+    showToast({
+      title: "Usuário Deslogado",
+      description: "redirecionando...",
+      variant: "warning",
+    });
   };
 
   // === TRIES TO LOAD STORED DATA ========================================== //
