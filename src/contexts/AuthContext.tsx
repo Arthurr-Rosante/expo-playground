@@ -100,6 +100,11 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   // === LOGOUT     FUNCTION ================================================ //
   const logout = () => {
     storeData({ user: null, token: null });
+    showToast({
+      title: "👋 Até mais!",
+      description: "redirecionando...",
+      variant: "success",
+    });
   };
 
   // === TRIES TO LOAD STORED DATA ========================================== //

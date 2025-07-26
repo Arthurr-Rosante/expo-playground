@@ -5,15 +5,37 @@ import Input from "@/src/components/ui/Input";
 import ThemedText from "@/src/components/ui/ThemedText";
 import ThemedView from "@/src/components/ui/ThemedView";
 import useAuth from "@/src/hooks/useAuth";
+import { validate } from "@/src/utils/fieldValidation";
 import { Link } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function SignUp() {
   const { register, isLoading } = useAuth();
+
   const [formData, setFormData] = useState<FormCredentials>({
     email: "",
     password: "",
+    confirmPassword: "",
   });
+  const [formDataErrors, setFormDataErrors] = useState<FormCredentials>({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  // === FORM VERIFICATION ================================================== //
+  const isFormValid =
+    Object.values(formDataErrors).every((err) => err === "") &&
+    Object.values(formData).every((val) => val.trim() !== "");
+  useEffect(() => {
+    const validationErrors = validate(formData);
+    if (Object.values(validationErrors).some((err) => err !== "")) {
+      setFormDataErrors(validationErrors);
+      return;
+    }
+    setFormDataErrors({ email: "", password: "" });
+  }, [formData]);
+  // ======================================================================== //
 
   const onSubmit = async (credentials: FormCredentials) => {
     console.log("REGISTER | CREDENTIALS ", credentials);
@@ -28,17 +50,28 @@ export default function SignUp() {
         <ThemedView>
           <Input
             value={formData["email"]}
+            error={formDataErrors["email"]}
             onChangeText={(t) => setFormData((prev) => ({ ...prev, email: t }))}
-            placeholder="dummy@gmail.com"
+            placeholder="Digite seu E-mail"
           />
           <Input
             value={formData["password"]}
+            error={formDataErrors["password"]}
             onChangeText={(t) =>
               setFormData((prev) => ({ ...prev, password: t }))
             }
-            placeholder="************"
+            placeholder="Digite sua senha"
+          />
+          <Input
+            value={formData["confirmPassword"]}
+            error={formDataErrors["confirmPassword"]}
+            onChangeText={(t) =>
+              setFormData((prev) => ({ ...prev, confirmPassword: t }))
+            }
+            placeholder="Confirme sua senha"
           />
           <Button
+            disabled={!isFormValid || isLoading}
             title={isLoading ? "Loading..." : "REGISTER"}
             onPress={() => onSubmit(formData)}
           />

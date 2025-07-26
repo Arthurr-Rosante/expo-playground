@@ -5,11 +5,12 @@ type ButtonProps = PressableProps & {
   title: string;
 };
 
-const Button = ({ title, onPress, ...rest }: ButtonProps) => {
+const Button = ({ title, onPress, disabled, ...rest }: ButtonProps) => {
   const { theme } = useTheme();
 
   const styles = StyleSheet.create({
     button: {
+      borderWidth: 1,
       backgroundColor: theme.foreground,
       padding: 12,
       borderRadius: 12,
@@ -22,8 +23,21 @@ const Button = ({ title, onPress, ...rest }: ButtonProps) => {
   });
 
   return (
-    <Pressable onPress={onPress} style={[styles.button]} {...rest}>
-      <Text style={styles.title}>{title}</Text>
+    <Pressable
+      onPress={onPress}
+      disabled={disabled}
+      style={[
+        styles.button,
+        disabled && {
+          backgroundColor: theme.background,
+          borderColor: theme.foreground,
+        },
+      ]}
+      {...rest}
+    >
+      <Text style={[styles.title, disabled && { color: theme.foreground }]}>
+        {title}
+      </Text>
     </Pressable>
   );
 };

@@ -1,57 +1,126 @@
-import Colors from "@/src/constants/colors";
+import { StyleSheet, TextInput, TextInputProps, View } from "react-native";
 import useTheme from "@/src/hooks/useTheme";
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TextInputProps,
-  View,
-} from "react-native";
+import { useEffect, useState } from "react";
+import Animated, {
+  runOnJS,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
+import { Feather, MaterialIcons } from "@expo/vector-icons";
+import ThemedText from "./ThemedText";
 
 type InputProps = TextInputProps & {
-  placeholder?: string;
+  type?: "text" | "email" | "password";
   error?: string;
   icon?: React.ElementType;
 };
 
 const Input = ({
-  placeholder,
+  type = "text",
   error,
   icon,
   value,
   onChangeText,
-  style,
+  style: customStyle,
   ...rest
 }: InputProps) => {
   const { theme } = useTheme();
 
+  const [focused, setFocused] = useState(false);
+  const [showError, setShowError] = useState(!!error);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+  const translateY = useSharedValue(-10);
+  const opacity = useSharedValue(0);
+
+  useEffect(() => {
+    if (error) {
+      setShowError(true);
+      translateY.value = withTiming(0, { duration: 250 });
+      opacity.value = withTiming(1, { duration: 250 });
+    } else {
+      translateY.value = withTiming(-10, { duration: 250 });
+      opacity.value = withTiming(0, { duration: 250 }, (finished) => {
+        if (finished) runOnJS(setShowError)(false);
+      });
+    }
+  }, [error]);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: translateY.value }],
+    opacity: opacity.value,
+  }));
+
   const styles = StyleSheet.create({
-    wrapper: {},
+    inputWrapper: {
+      position: "relative",
+      borderBottomWidth: 2,
+      marginVertical: 12,
+      borderColor: error
+        ? theme.ui.error.text
+        : focused
+        ? theme.primary
+        : theme.foreground,
+    },
     input: {
       color: theme.text,
-      backgroundColor: theme.background,
-      borderWidth: 1,
-      borderColor: theme.foreground,
-      borderRadius: 12,
-      padding: 12,
-      marginVertical: 6,
     },
-    error: {
-      color: theme.ui.error,
+    icon: {
+      position: "absolute",
+      top: 0,
+      right: 0,
+      padding: 10,
+    },
+    errorWrapper: {
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 8,
     },
   });
 
   return (
-    <View style={styles.wrapper}>
-      <TextInput
-        value={value}
-        placeholderTextColor={theme.text}
-        onChangeText={onChangeText}
-        placeholder={placeholder}
-        style={[styles.input, style]}
-        {...rest}
-      />
-      {error && <Text style={styles.error}></Text>}
+    <View>
+      <View style={styles.inputWrapper}>
+        <TextInput
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
+          placeholderTextColor={theme.text}
+          style={[
+            styles.input,
+            customStyle,
+            type === "password" && { paddingRight: 45 },
+          ]}
+          keyboardType={type === "email" ? "email-address" : "default"}
+          secureTextEntry={type === "password" && !isPasswordVisible}
+          value={value}
+          onChangeText={onChangeText}
+          {...rest}
+        />
+        {type === "password" && (
+          <View style={styles.icon}>
+            <Feather
+              name={isPasswordVisible ? "eye" : "eye-off"}
+              size={22}
+              color={focused ? theme.primary : theme.text}
+              onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+            />
+          </View>
+        )}
+      </View>
+
+      {showError && (
+        <Animated.View style={[styles.errorWrapper, animatedStyle]}>
+          <MaterialIcons
+            name="error-outline"
+            size={18}
+            color={theme.ui.error.text}
+          />
+          <ThemedText variant="small" style={{ color: theme.ui.error.text }}>
+            {error}
+          </ThemedText>
+        </Animated.View>
+      )}
     </View>
   );
 };

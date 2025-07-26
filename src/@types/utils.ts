@@ -3,3 +3,8 @@ export type FormCredentials = {
   password: string;
   confirmPassword?: string;
 };
+
+export type Coordinates = {
+  latitude: number;
+  longitude: number;
+};
