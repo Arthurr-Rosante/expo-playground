@@ -2,7 +2,6 @@ import { createContext, PropsWithChildren, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SplashScreen } from "expo-router";
 import { AuthState } from "../@types/state";
-import { MOCK_USER, MOCK_TOKEN } from "../constants/mock";
 import * as auth from "@/src/services/AuthService";
 import useToast from "../hooks/useToast";
 
@@ -15,7 +14,6 @@ export const AuthContext = createContext<AuthState>({
     token: null,
   },
   isLoading: false,
-  error: null,
   register: async () => {},
   login: async () => {},
   logout: () => {},
@@ -28,7 +26,6 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   });
   const [isReady, setIsReady] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const { showToast } = useToast();
 
   // === STORE DATA ON      ASYNC STORAGE =================================== //
@@ -44,11 +41,14 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   };
 
   // === REGISTER   FUNCTION ================================================ //
-  const register = async (email: string, password: string) => {
+  const register = async (email: string, password: string, name?: string) => {
     try {
       setIsLoading(true);
 
-      const { user, token } = await auth.register(email, password);
+      // 'username' caso name não tenha sido provido
+      const username = name ?? email.split("@")[0];
+
+      const { user, token } = await auth.register(username, email, password);
       storeData({ user, token });
 
       // === MOCK DATA === //
@@ -103,7 +103,6 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     showToast({
       title: "👋 Até mais!",
       description: "redirecionando...",
-      variant: "success",
     });
   };
 
@@ -121,9 +120,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   }, [isReady]);
 
   return (
-    <AuthContext.Provider
-      value={{ data, isLoading, error, register, login, logout }}
-    >
+    <AuthContext.Provider value={{ data, isLoading, register, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

@@ -8,3 +8,9 @@ export type Coordinates = {
   latitude: number;
   longitude: number;
 };
+
+export type ApiErrorResponse = {
+  errorMessages?: string[];
+  message?: string;
+  status?: string;
+};

@@ -1,5 +1,5 @@
 export type User = {
-  id: string;
+  id?: string;
   name: string;
   email: string;
   biography: string;
@@ -14,7 +14,7 @@ export type User = {
       torso: string;
       leg: string;
       bag: string;
-      acessory: string;
+      accessory: string;
     };
   };
   unlockedStyles: {
@@ -26,6 +26,6 @@ export type User = {
     unlockedBagStyles: string;
     unlockedAcessoryStyles: string;
   };
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 };

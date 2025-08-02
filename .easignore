@@ -9,13 +9,6 @@ dist/
 web-build/
 expo-env.d.ts
 
-#Firebase
-google-services.json
-
-# Native
-/android
-/ios
-
 .kotlin/
 *.orig.*
 *.jks

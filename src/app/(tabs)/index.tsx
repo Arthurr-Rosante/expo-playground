@@ -13,7 +13,10 @@ export default function HomeTab() {
     <Container>
       <ThemedView style={{ alignItems: "center", justifyContent: "center" }}>
         <ThemedText variant="title">~ USER INFO ~</ThemedText>
-        <Avatar size={120} source={{ uri: data.user?.pfp }} />
+        <Avatar
+          size={120}
+          fallback={{ uri: require("@/src/assets/images/icon.png") }}
+        />
         <ThemedView style={styles.card}>
           <ThemedText>{data.user?.id}</ThemedText>
           <ThemedText>{data.user?.name}</ThemedText>

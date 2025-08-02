@@ -48,7 +48,7 @@ export const Toast = (toast: ToastOptions) => {
       default:
         return {
           backgroundColor: theme.foreground,
-          textColor: theme.background,
+          textColor: theme.foreground,
         };
     }
   };

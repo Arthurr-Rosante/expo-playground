@@ -55,6 +55,7 @@ const config = ({ config }: ConfigContext): ExpoConfig => {
     // === ANDROID CONFIGURATIONS =========================================== //
     android: {
       package: PACKAGE,
+      googleServicesFile: "",
       adaptiveIcon: {
         foregroundImage: ADAPTIVE_ICON,
         backgroundColor: APP_BACKGROUND_COLOR,
