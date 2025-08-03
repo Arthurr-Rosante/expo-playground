@@ -74,6 +74,9 @@ export default function SignIn() {
           Sign Up
         </Link>
       </ThemedText>
+      <Link href={"/(auth)/google-sign-in"} style={{ color: "#0000ff" }}>
+        Sign in With Google
+      </Link>
     </Container>
   );
 }

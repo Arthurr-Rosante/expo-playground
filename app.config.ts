@@ -55,7 +55,7 @@ const config = ({ config }: ConfigContext): ExpoConfig => {
     // === ANDROID CONFIGURATIONS =========================================== //
     android: {
       package: PACKAGE,
-      googleServicesFile: "",
+      googleServicesFile: "./google-services.json",
       adaptiveIcon: {
         foregroundImage: ADAPTIVE_ICON,
         backgroundColor: APP_BACKGROUND_COLOR,
@@ -90,6 +90,8 @@ const config = ({ config }: ConfigContext): ExpoConfig => {
       // === EXPO ROUTER === //
       "expo-router",
 
+      // === REACT NATIVE GOOGLE SIGN IN === //
+      ["@react-native-google-signin/google-signin"],
       // === EXPO SPLASH SCREEN === //
       [
         "expo-splash-screen",
