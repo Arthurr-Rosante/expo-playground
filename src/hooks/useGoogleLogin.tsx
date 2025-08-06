@@ -1,6 +1,9 @@
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
-import firebase from "@/firebase";
-import rnfb from "@react-native-firebase/auth";
+import fb from "@/firebase";
+import {
+  GoogleAuthProvider,
+  signInWithCredential,
+} from "@react-native-firebase/auth";
 import { useState } from "react";
 
 GoogleSignin.configure({
@@ -21,10 +24,10 @@ const useGoogleLogin = () => {
     const response = await GoogleSignin.signIn();
     if (response && response.data) {
       console.log(response.data);
-      const googleCredential = rnfb.GoogleAuthProvider.credential(
+      const googleCredential = GoogleAuthProvider.credential(
         response.data.idToken
       );
-      await firebase.auth().signInWithCredential(googleCredential);
+      await signInWithCredential(fb.auth, googleCredential);
     } else {
       console.warn("No response from GoogleSignin");
     }

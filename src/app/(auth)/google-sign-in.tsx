@@ -8,18 +8,18 @@ import {
 } from "@react-native-firebase/auth";
 import { useEffect, useState } from "react";
 import { Button, Image, ImageBackground, StyleSheet } from "react-native";
-import firebase from "@/firebase";
+import fb from "@/firebase";
 import ThemedView from "@/src/components/ui/ThemedView";
 
 export default function GoogleSignIn() {
   const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
 
   const logout = async () => {
-    await signOut(firebase.auth());
+    await signOut(fb.auth);
   };
 
   useEffect(() => {
-    return onAuthStateChanged(firebase.auth(), async (user) => {
+    return onAuthStateChanged(fb.auth, async (user) => {
       setUser(user);
     });
   }, []);
@@ -27,12 +27,16 @@ export default function GoogleSignIn() {
   return (
     <Container style={styles.container}>
       <ImageBackground
-        source={{ uri: 'https://images.pexels.com/photos/256453/pexels-photo-256453.jpeg' }}
+        source={{
+          uri: "https://images.pexels.com/photos/256453/pexels-photo-256453.jpeg",
+        }}
         style={styles.imageBackground}
       />
       <ThemedView style={styles.container}>
         <Image
-          source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/800px-Google_%22G%22_logo.svg.png' }}
+          source={{
+            uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/800px-Google_%22G%22_logo.svg.png",
+          }}
           style={styles.image}
         />
         <ThemedText variant="title">GOOGLE SIGN IN</ThemedText>
@@ -62,25 +66,25 @@ export default function GoogleSignIn() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
   },
   image: {
-    resizeMode: 'stretch',
+    resizeMode: "stretch",
     width: 30,
     height: 30,
-    alignSelf: 'center',
+    alignSelf: "center",
   },
   imageBackground: {
-    resizeMode: 'stretch',
-    width: '110%',
-    height: '110%',
-    position: 'absolute',
+    resizeMode: "stretch",
+    width: "110%",
+    height: "110%",
+    position: "absolute",
   },
   user: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: '5%',
-    backgroundColor: '#414141cf',
-    borderRadius: '10%',
-  }
-})
+    justifyContent: "center",
+    alignItems: "center",
+    padding: "5%",
+    backgroundColor: "#414141cf",
+    borderRadius: "10%",
+  },
+});
