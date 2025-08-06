@@ -8,6 +8,7 @@ import useAuth from "@/src/hooks/useAuth";
 import { validate } from "@/src/utils/fieldValidation";
 import { Link } from "expo-router";
 import { useEffect, useState } from "react";
+import { ImageBackground, StyleSheet } from "react-native";
 
 export default function SignUp() {
   const { register, isLoading } = useAuth();
@@ -44,15 +45,20 @@ export default function SignUp() {
 
   return (
     <Container>
-      <ThemedView>
-        <ThemedText variant="title">[ REGISTER FORM ]</ThemedText>
+      <ImageBackground
+        source={{ uri: 'https://images.pexels.com/photos/256453/pexels-photo-256453.jpeg' }}
+        style={styles.imageBackground}
+      />
+      <ThemedView style={styles.container}>
+        <ThemedText variant="title">REGISTRO ALUNO</ThemedText>
 
-        <ThemedView>
+        <ThemedView style={styles.form}>
           <Input
             value={formData["email"]}
             error={formDataErrors["email"]}
             onChangeText={(t) => setFormData((prev) => ({ ...prev, email: t }))}
             placeholder="Digite seu E-mail"
+            style={styles.input}
           />
           <Input
             value={formData["password"]}
@@ -61,6 +67,7 @@ export default function SignUp() {
               setFormData((prev) => ({ ...prev, password: t }))
             }
             placeholder="Digite sua senha"
+            style={styles.input}
           />
           <Input
             value={formData["confirmPassword"]}
@@ -69,6 +76,7 @@ export default function SignUp() {
               setFormData((prev) => ({ ...prev, confirmPassword: t }))
             }
             placeholder="Confirme sua senha"
+            style={styles.input}
           />
           <Button
             disabled={!isFormValid || isLoading}
@@ -80,13 +88,40 @@ export default function SignUp() {
 
       <ThemedText>
         Already has an account?{" "}
-        <Link href={"/(auth)/sign-in"} style={{ color: "#0000ff" }}>
+        <Link href={"/(auth)/sign-in"} style={{ color: "#b6ff39ff" }}>
           Sign In
         </Link>
       </ThemedText>
-      <Link href={"/(auth)/google-sign-in"} style={{ color: "#0000ff" }}>
-        Sign in With Google
+      <Link href={"/(auth)/google-sign-in"} style={{ color: "#b6ff39ff" }}>
+        Sign up With Google
       </Link>
     </Container>
   );
 }
+
+const styles = StyleSheet.create({
+  imageBackground: {
+    resizeMode: 'stretch',
+    width: '110%',
+    height: '110%',
+    position: 'absolute',
+  },
+  container: {
+    justifyContent: "center",
+    alignItems: "center",
+    padding: '5%',
+    borderRadius: '5%',
+    margin: 5,
+    backgroundColor: '#5b5b5bac',
+    width: '80%',
+  },
+  form: {
+    backgroundColor: '#414141cf',
+    padding: '5%',
+    borderRadius: '5%',
+    width: '100%',
+  },
+  input: {
+    
+  },
+})
